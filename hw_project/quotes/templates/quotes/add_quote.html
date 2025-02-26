@@ -1,0 +1,15 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+    <h2>Add a quote</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+{% endblock %}
