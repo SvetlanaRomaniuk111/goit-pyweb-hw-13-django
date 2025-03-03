@@ -1,5 +1,4 @@
 from datetime import datetime, timezone
-
 from bson import ObjectId
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -18,16 +17,18 @@ def main(request, page=1):
     return render(request, 'quotes/index.html',
                   context={'quotes': quotes_on_page})
 
+
 def author_list(request):
     author = Author.objects.all()
     return render(request, "quotes/author.html", {"author": author})
+
 
 @login_required
 def add_author(request):
     if request.method == 'POST':
         form = AuthorForm(request.POST)
         if form.is_valid():
-            author=form.save(commit=False)
+            author = form.save(commit=False)
 
             # Додавання автора в MongoDB
             db = get_mongodb()
@@ -46,12 +47,13 @@ def add_author(request):
         form = AuthorForm()
     return render(request, 'quotes/add_author.html', {'form': form})
 
+
 @login_required
 def add_quote(request):
     if request.method == 'POST':
         form = QuoteForm(request.POST)
         if form.is_valid():
-            quote=form.save(commit=False)
+            quote = form.save(commit=False)
 
             # Додавання цитати в MongoDB
             db = get_mongodb()

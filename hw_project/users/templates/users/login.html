@@ -7,19 +7,19 @@
     {% if messages %}
     <div class="messages mb-3">
         {% for message in messages %}
-        <span {% if message.tags %} class="alert alert-{{ message.tags }}"
+        <span {% if message.level_tag %} class="alert alert-{{ message.level_tag }}"
               {% endif %}>{{ message }}</span>
         {% endfor %}
     </div>
     {% endif %}
 
-    {% if form.errors and form.non_field_errors %}
+    {% if form.Errors and form.non_field_errors %}
     <div class="alert alert-danger" role="alert">
         {{form.non_field_errors}}
     </div>
     {% endif %}
 
-    <form method="post">
+    <form action="{% url 'users:login' %}" method="post">
         {% csrf_token %}
         <div class="mb-3">
             <label class="form-label">Username
@@ -35,6 +35,9 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="reset" class="btn btn-secondary">Reset</button>
+        <div class="small text-center">
+            <a href="{% url 'users:password_reset' %}" class="text-center"><i>Forgot Password?</i></a>
+        </div>
     </form>
 </div>
 {% endblock %}

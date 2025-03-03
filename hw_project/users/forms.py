@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import CharField, TextInput, EmailInput, EmailField, \
-    PasswordInput
+    PasswordInput, ModelForm, ImageField, FileInput
+from django.contrib.auth.models import User
+
+from .models import Profile
 
 
 class RegisterForm(UserCreationForm):
@@ -11,9 +14,11 @@ class RegisterForm(UserCreationForm):
     email = EmailField(max_length=25, required=True, widget=EmailInput(
         attrs={"class": "form-control", "placeholder": "Enter email"}))
     password1 = CharField(required=True,
-                          widget=PasswordInput(attrs={"class": "form-control", "placeholder": "Enter password"}))
+                          widget=PasswordInput(attrs={"class": "form-control",
+                                                      "placeholder": "Enter password"}))
     password2 = CharField(required=True,
-                          widget=PasswordInput(attrs={"class": "form-control", "placeholder": "Repeat password"}))
+                          widget=PasswordInput(attrs={"class": "form-control",
+                                                      "placeholder": "Repeat password"}))
 
     class Meta:
         model = User
@@ -25,8 +30,16 @@ class LoginForm(AuthenticationForm):
                          widget=TextInput(attrs={"class": "form-control",
                                                  "placeholder": "Enter username"}))
     password = CharField(required=True,
-                         widget=PasswordInput(attrs={"class": "form-control", "placeholder": "Enter password"}))
+                         widget=PasswordInput(attrs={"class": "form-control",
+                                                     "placeholder": "Enter password"}))
 
     class Meta:
         model = User
         fields = ('username', 'password')
+
+class ProfileForm(ModelForm):
+    avatar = ImageField(widget=FileInput())
+
+    class Meta:
+        model = Profile
+        fields = ['avatar']
